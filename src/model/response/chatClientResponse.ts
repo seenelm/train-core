@@ -9,7 +9,10 @@ export interface ConversationResponse {
 }
 
 export interface MessageResponse {
+    sender_id: ObjectId;
+    conversation_id: ObjectId;
     text: string;
+    created_at: Date;
 };
 
 export interface CreateConversationResponse {
