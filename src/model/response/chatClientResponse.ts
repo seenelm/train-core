@@ -2,14 +2,14 @@ import { ObjectId } from 'mongodb';
 
 export interface ConversationResponse {
     id: ObjectId;
-    name: String;
+    name: string;
     owner_id: ObjectId;
     members: ObjectId[];
     created_at: Date;
 }
 
 export interface MessageResponse {
-    text: String;
+    text: string;
 };
 
 export interface CreateConversationResponse {

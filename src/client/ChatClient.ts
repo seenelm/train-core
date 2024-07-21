@@ -10,12 +10,6 @@ class ChatClient {
         this.socket = io("http://localhost:3001");
     }
 
-    // public createConversation(createConversationRequest: CreateConversation) {
-    //     this.socket.emit("create-chat", createConversationRequest, (response: CreateConversationResponse) => {
-    //         console.log("Received create-conversation-response: ", response);
-    //     });
-    // }
-
     public createSocketConnection(user_id: ObjectId) {
         this.socket.emit("join", user_id);
     }
