@@ -4,7 +4,7 @@ import ChatService from "../src/service/ChatService";
 import { UserRegisterRequest, UserLoginRequest } from "../src/model/request/userApiRequest";
 import { CreateConversation, InitMessageRequest, ConversationRequest, User, MessageRequest } from "../src/model/request/chatClientRequest";
 import { UserRegisterResponse, UserLoginResponse } from "../src/model/response/userApiResponse";
-import { ConversationListResponse, ConversationResponse } from "../src/model/response/chatApiResponse";
+import { ConversationListResponse, ConversationResponse, MessageListResponse } from "../src/model/response/chatApiResponse";
 
 import NodeCache from "node-cache";
 import { CreateConversationResponse, MessageResponse } from "../src/model/response/chatClientResponse";
@@ -20,8 +20,6 @@ describe("Chat Client Integration Tests", () => {
     beforeAll(async () => {
         userService = new UserService();
         chatService = new ChatService("http://localhost:3002/chat/api");
-        // clientOne = new ChatClient();
-        // clientTwo = new ChatClient();
 
         const userOneLoginRequest: UserLoginRequest = {
             username: "userOne",
@@ -40,11 +38,6 @@ describe("Chat Client Integration Tests", () => {
         userDataCache.set("userTwoLogin", userTwoLoginResponse);
     });
 
-    // afterAll(() => {
-    //     clientOne.disconnect();
-    //     clientTwo.disconnect();
-    // });
-
     it("Client One should create a conversation and send initial message to Client Two", async () => {
         let message: string = "Hello User Two";
 
@@ -58,7 +51,6 @@ describe("Chat Client Integration Tests", () => {
         }
 
         const userTwoLoginResponse: UserLoginResponse | undefined = userDataCache.get("userTwoLogin");
-        console.log("userTwoLoginResponse: ", userTwoLoginResponse);
         if (!userTwoLoginResponse) {
             console.error("User Two not found in cache");
             return;
@@ -68,7 +60,6 @@ describe("Chat Client Integration Tests", () => {
         clientTwo.createSocketConnection(userTwoLoginResponse.userId);
 
         await Promise.all([clientOne.waitForConnection(), clientTwo.waitForConnection()]);
-        // await clientOne.waitForConnection();
 
         const user: User = {
             id: userTwoLoginResponse.userId,
@@ -112,6 +103,8 @@ describe("Chat Client Integration Tests", () => {
 
         let conversationListResponse: ConversationListResponse = await chatService.fetchAllConversations(userOneLoginResponse.userId);
         let conversations = conversationListResponse.conversations;
+        
+        console.log("Client One Conversation: ", conversations[0].name);
 
         expect(conversations.length).toBeGreaterThan(0);
         expect(conversations[0].owner_id).toEqual(userOneLoginResponse.userId);
@@ -126,8 +119,8 @@ describe("Chat Client Integration Tests", () => {
 
         let conversationListResponse: ConversationListResponse = await chatService.fetchAllConversations(userTwoLoginResponse.userId);
         let conversations = conversationListResponse.conversations;
+        console.log("Client Two Conversation: ", conversations[0].name);
         userDataCache.set("Conversation", conversations[0]);
-        // console.log("User Two Conversations: ", conversations);
 
         expect(conversations.length).toBeGreaterThan(0);
         expect(conversations[0].members[0]).toEqual(userTwoLoginResponse.userId);
@@ -162,7 +155,6 @@ describe("Chat Client Integration Tests", () => {
         await Promise.all([clientOne.waitForConnection(), clientTwo.waitForConnection()]);
 
          // Join clients in conversation.
-         console.log("Conversation ID: ", conversation.id);
          clientOne.handleJoinConversation(conversation.id);
          clientTwo.handleJoinConversation(conversation.id);
 
@@ -176,7 +168,6 @@ describe("Chat Client Integration Tests", () => {
         clientTwo.sendMessage(newMessage);
 
         const messageResponse: MessageResponse = await clientOne.handleMessage();
-        console.log("Message Response: ", messageResponse);
 
         clientOne.disconnect();
         clientTwo.disconnect();
@@ -186,10 +177,20 @@ describe("Chat Client Integration Tests", () => {
     });
 
     it("Fetch all messages for Client One", async () => {
+        const conversation: ConversationResponse | undefined = userDataCache.get("Conversation");
+        if (!conversation) {
+            console.error("Conversation not found in cache");
+            return;
+        }
 
+        let messageListResponse: MessageListResponse = await chatService.fetchAllMessages(conversation.id);
+        let messages = messageListResponse.messages;
+        console.log("Messages: ", messages);
+
+        expect(messages.length).toBeGreaterThan(0);
     });
 
-    it("Fetch all messages for Client Two", async () => {
+    // it("Fetch all messages for Client Two", async () => {
 
-    });
+    // });
 });
