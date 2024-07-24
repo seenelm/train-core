@@ -8,7 +8,6 @@ import { ConversationListResponse, ConversationResponse } from "../src/model/res
 
 import NodeCache from "node-cache";
 import { CreateConversationResponse, MessageResponse } from "../src/model/response/chatClientResponse";
-import { ObjectId } from "mongodb";
 
 const userDataCache = new NodeCache();
 
@@ -21,8 +20,8 @@ describe("Chat Client Integration Tests", () => {
     beforeAll(async () => {
         userService = new UserService();
         chatService = new ChatService("http://localhost:3002/chat/api");
-        clientOne = new ChatClient();
-        clientTwo = new ChatClient();
+        // clientOne = new ChatClient();
+        // clientTwo = new ChatClient();
 
         const userOneLoginRequest: UserLoginRequest = {
             username: "userOne",
@@ -33,24 +32,6 @@ describe("Chat Client Integration Tests", () => {
             username: "userTwo",
             password: "Password98!"
         };
-
-        // const userOneRegisterRequest: UserRegisterRequest = {
-        //     username: "userOne",
-        //     password: "Password98!",
-        //     name: "User One"
-        // };
-
-        // const userTwoRegisterRequest: UserRegisterRequest = {
-        //     username: "userTwo",
-        //     password: "Password98!",
-        //     name: "User Two"
-        // };
-        
-        // const userOneRegisterResponse: UserRegisterResponse = await userService.register(userOneRegisterRequest);
-        // userDataCache.set("userOne", userOneRegisterResponse);
-
-        // const userTwoRegisterResponse: UserRegisterResponse = await userService.register(userTwoRegisterRequest);
-        // userDataCache.set("userTwo", userTwoRegisterResponse);
 
         const userOneLoginResponse: UserLoginResponse = await userService.login(userOneLoginRequest);
         userDataCache.set("userOneLogin", userOneLoginResponse);
@@ -67,8 +48,8 @@ describe("Chat Client Integration Tests", () => {
     it("Client One should create a conversation and send initial message to Client Two", async () => {
         let message: string = "Hello User Two";
 
-        // clientOne = new ChatClient();
-        // clientTwo = new ChatClient();
+        clientOne = new ChatClient();
+        clientTwo = new ChatClient();
 
         const userOneLoginResponse: UserLoginResponse | undefined = userDataCache.get("userOneLogin");
         if (!userOneLoginResponse) {
@@ -146,13 +127,16 @@ describe("Chat Client Integration Tests", () => {
         let conversationListResponse: ConversationListResponse = await chatService.fetchAllConversations(userTwoLoginResponse.userId);
         let conversations = conversationListResponse.conversations;
         userDataCache.set("Conversation", conversations[0]);
-        console.log("User Two Conversations: ", conversations);
+        // console.log("User Two Conversations: ", conversations);
 
         expect(conversations.length).toBeGreaterThan(0);
         expect(conversations[0].members[0]).toEqual(userTwoLoginResponse.userId);
     });
 
     it("Send messages between Client One and Client Two", async () => {
+        clientOne = new ChatClient();
+        clientTwo = new ChatClient();
+
         const conversation: ConversationResponse | undefined = userDataCache.get("Conversation");
         if (!conversation) {
             console.error("Conversation not found in cache");
@@ -177,31 +161,35 @@ describe("Chat Client Integration Tests", () => {
 
         await Promise.all([clientOne.waitForConnection(), clientTwo.waitForConnection()]);
 
+         // Join clients in conversation.
+         console.log("Conversation ID: ", conversation.id);
+         clientOne.handleJoinConversation(conversation.id);
+         clientTwo.handleJoinConversation(conversation.id);
+
         const newMessage: MessageRequest = {
-            sender_id: userOneLoginResponse.userId,
+            sender_id: userTwoLoginResponse.userId,
             conversation_id: conversation.id,
-            text: "Hello User Two",
+            text: "Hello User One!",
             created_at: new Date(),
         };
 
-        // Join clients in conversation.
-        clientOne.handleJoinConversation(conversation.id);
-        clientTwo.handleJoinConversation(conversation.id);
+        clientTwo.sendMessage(newMessage);
 
-        clientOne.sendMessage(newMessage);
+        const messageResponse: MessageResponse = await clientOne.handleMessage();
+        console.log("Message Response: ", messageResponse);
 
-        const messageResponse: MessageResponse = await clientTwo.handleMessage();
-
+        clientOne.disconnect();
+        clientTwo.disconnect();
         expect(messageResponse.sender_id).toEqual(newMessage.sender_id);
         expect(messageResponse.text).toEqual(newMessage.text);
         expect(messageResponse.conversation_id).toEqual(newMessage.conversation_id);
     });
 
-    // it("Fetch all messages for Client One", async () => {
+    it("Fetch all messages for Client One", async () => {
 
-    // });
+    });
 
-    // it("Fetch all messages for Client Two", async () => {
+    it("Fetch all messages for Client Two", async () => {
 
-    // });
+    });
 });
