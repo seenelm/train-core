@@ -8,6 +8,7 @@ export interface User {
 export interface ConversationRequest {
   name?: string;
   owner_id: ObjectId;
+  owner_name: string;
   members: User[];
   created_at: Date;
 }

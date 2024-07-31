@@ -39,7 +39,7 @@ class ChatClient {
     public handleCreateConversation(): Promise<CreateConversationResponse> {
         return new Promise((resolve, reject) => {
             this.socket.on("create-chat-response", (response: CreateConversationResponse) => {
-                console.log("Received create-conversation-response: ", response);
+                // console.log("Received create-conversation-response: ", response);
                 resolve(response);
             });
 
@@ -57,7 +57,6 @@ class ChatClient {
     public handleMessage(): Promise<MessageResponse> {
         return new Promise((resolve, reject) => {
             this.socket.on("chat-message", (response: MessageResponse) => {
-                console.log("Received message-response: ", response);
                 resolve(response);
             });
         });
