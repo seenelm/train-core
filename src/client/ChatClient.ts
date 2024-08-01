@@ -1,6 +1,8 @@
 import { io, Socket } from "socket.io-client";
-import { CreateConversation, MessageRequest } from "../model/request/chatClientRequest";
-import { CreateConversationResponse, MessageResponse } from "../model/response/chatClientResponse";
+import { CreateConversation } from "../model/request/conversationRequest";
+import { MessageRequest } from "../model/request/messageRequest";
+import { CreateConversationResponse } from "../model/response/conversationResponse";
+import { MessageResponse } from "../model/response/messageResponse";
 import { ObjectId } from "mongodb";
 
 class ChatClient {
@@ -39,7 +41,7 @@ class ChatClient {
     public handleCreateConversation(): Promise<CreateConversationResponse> {
         return new Promise((resolve, reject) => {
             this.socket.on("create-chat-response", (response: CreateConversationResponse) => {
-                // console.log("Received create-conversation-response: ", response);
+                console.log("Received create-conversation-response: ", response);
                 resolve(response);
             });
 

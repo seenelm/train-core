@@ -1,6 +1,7 @@
 import axios from "axios";
 import { ObjectId } from "mongodb";
-import { ConversationListResponse,  MessageListResponse } from "../model/response/chatApiResponse";
+import { ConversationListResponse } from "../model/response/conversationResponse";
+import { MessageListResponse } from "../model/response/messageResponse";
 
 
 class ChatService {

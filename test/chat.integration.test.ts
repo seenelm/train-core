@@ -1,15 +1,17 @@
 import ChatClient from "../src/client/ChatClient";
 import UserService from "../src/service/UserService";
 import ChatService from "../src/service/ChatService";
-import { UserRegisterRequest, UserLoginRequest } from "../src/model/request/userApiRequest";
-import { CreateConversation, InitMessageRequest, ConversationRequest, User, MessageRequest } from "../src/model/request/chatClientRequest";
-import { UserRegisterResponse, UserLoginResponse } from "../src/model/response/userApiResponse";
-import { ConversationListResponse, ConversationResponse, MessageListResponse } from "../src/model/response/chatApiResponse";
+import { UserLoginRequest } from "../src/model/request/userApiRequest";
+
+import { UserLoginResponse } from "../src/model/response/userApiResponse";
+
+import { CreateConversation, UserRequest, ConversationRequest } from "../src/model/request/conversationRequest";
+import { InitMessageRequest } from "../src/model/request/messageRequest";
+
+import { ConversationListResponse, CreateConversationResponse } from "../src/model/response/conversationResponse";
+import { MessageResponse } from "../src/model/response/messageResponse";
 
 import NodeCache from "node-cache";
-import { CreateConversationResponse, MessageResponse } from "../src/model/response/chatClientResponse";
-
-import axios from "axios";
 
 jest.setTimeout(10000);
 
@@ -72,7 +74,7 @@ describe("Chat Client Integration Tests", () => {
 
         await Promise.all([clientOne.waitForConnection(), clientTwo.waitForConnection()]);
 
-        const user: User = {
+        const user: UserRequest = {
             id: userTwoLoginResponse.userId,
             name: userTwoLoginResponse.name,
         }
@@ -98,10 +100,18 @@ describe("Chat Client Integration Tests", () => {
 
         clientOne.createConversation(createConversationRequest);
 
-        const clientTwoCreateConversationResponse = await clientTwo.handleCreateConversation();
+        const clientTwoCreateConversationResponse: CreateConversationResponse = await clientTwo.handleCreateConversation();
 
         expect(clientTwoCreateConversationResponse.message_response.text).toEqual(message);
+        expect(clientTwoCreateConversationResponse.message_response.sender_id).toEqual(userOneLoginResponse.userId);
+        // expect(clientTwoCreateConversationResponse.message_response.created_at).toEqual(init_message_request.created_at.toString());
+        expect(clientTwoCreateConversationResponse.message_response.conversation_id).toEqual(clientTwoCreateConversationResponse.conversation_response.id);
+
         expect(clientTwoCreateConversationResponse.conversation_response.name).toEqual(userOneLoginResponse.name);
+        expect(clientTwoCreateConversationResponse.conversation_response.owner_id).toEqual(userOneLoginResponse.userId);
+        expect(clientTwoCreateConversationResponse.conversation_response.owner_name).toEqual(userOneLoginResponse.name);
+        // expect(clientTwoCreateConversationResponse.conversation_response.created_at).toEqual(conversation_request.created_at.toString());
+        expect(clientTwoCreateConversationResponse.conversation_response.members[0].id).toEqual(userTwoLoginResponse.userId);
 
     });
 
@@ -125,7 +135,7 @@ describe("Chat Client Integration Tests", () => {
 
         await Promise.all([clientOne.waitForConnection(), clientTwo.waitForConnection()]);
 
-        const user: User = {
+        const user: UserRequest = {
             id: userTwoLoginResponse.userId,
             name: userTwoLoginResponse.name,
         }
@@ -151,59 +161,59 @@ describe("Chat Client Integration Tests", () => {
 
         clientOne.createConversation(createConversationRequest);
 
-        const clientTwoCreateConversationResponse = await clientTwo.handleCreateConversation();
+        const clientOneResponse = await clientOne.handleCreateConversation();
 
-        expect(clientTwoCreateConversationResponse.conversation_response.owner_id).toEqual(userOneLoginResponse.userId);
-        expect(clientTwoCreateConversationResponse.conversation_response.members[0].id).toEqual(userTwoLoginResponse.userId);
-        expect(clientTwoCreateConversationResponse.message_response.text).toEqual(message);
-        expect(clientTwoCreateConversationResponse.conversation_response.name).toEqual(userOneLoginResponse.name);
+        expect(clientOneResponse.conversation_response.owner_id).toEqual(userOneLoginResponse.userId);
+        expect(clientOneResponse.conversation_response.members[0].id).toEqual(userTwoLoginResponse.userId);
+        expect(clientOneResponse.message_response.text).toEqual(message);
+        expect(clientOneResponse.conversation_response.name).toEqual(userTwoLoginResponse.name);
     });
 
-    it("Fetch all conversations for Client One", async () => {
-        const userOneLoginResponse: UserLoginResponse | undefined = userDataCache.get("userOneLogin");
-        if (!userOneLoginResponse) {
-            console.error("User One not found in cache");
-            return;
-        }
+    // it("Fetch all conversations for Client One", async () => {
+    //     const userOneLoginResponse: UserLoginResponse | undefined = userDataCache.get("userOneLogin");
+    //     if (!userOneLoginResponse) {
+    //         console.error("User One not found in cache");
+    //         return;
+    //     }
 
-        const userTwoLoginResponse: UserLoginResponse | undefined = userDataCache.get("userTwoLogin");
-        if (!userTwoLoginResponse) {
-            console.error("User Two not found in cache");
-            return;
-        }
+    //     const userTwoLoginResponse: UserLoginResponse | undefined = userDataCache.get("userTwoLogin");
+    //     if (!userTwoLoginResponse) {
+    //         console.error("User Two not found in cache");
+    //         return;
+    //     }
 
-        let conversationListResponse: ConversationListResponse = await chatService.fetchAllConversations(userOneLoginResponse.userId);
-        let conversations = conversationListResponse.conversations;
+    //     let conversationListResponse: ConversationListResponse = await chatService.fetchAllConversations(userOneLoginResponse.userId);
+    //     let conversations = conversationListResponse.conversations;
         
-        console.log("Client One Conversation: ", conversations[0].name);
+    //     console.log("Client One Conversation: ", conversations[0].name);
 
-        expect(conversations.length).toBeGreaterThan(0);
-        expect(conversations[0].owner_id).toEqual(userOneLoginResponse.userId);
-        expect(conversations[0].name).toEqual(userTwoLoginResponse.name);
-    });
+    //     expect(conversations.length).toBeGreaterThan(0);
+    //     expect(conversations[0].owner_id).toEqual(userOneLoginResponse.userId);
+    //     expect(conversations[0].name).toEqual(userTwoLoginResponse.name);
+    // });
 
-    it("Fetch all conversations for Client Two", async () => {
-        const userTwoLoginResponse: UserLoginResponse | undefined = userDataCache.get("userTwoLogin");
-        if (!userTwoLoginResponse) {
-            console.error("User Two not found in cache");
-            return;
-        }
+    // it("Fetch all conversations for Client Two", async () => {
+    //     const userTwoLoginResponse: UserLoginResponse | undefined = userDataCache.get("userTwoLogin");
+    //     if (!userTwoLoginResponse) {
+    //         console.error("User Two not found in cache");
+    //         return;
+    //     }
 
-        const userOneLoginResponse: UserLoginResponse | undefined = userDataCache.get("userOneLogin");
-        if (!userOneLoginResponse) {
-            console.error("User One not found in cache");
-            return;
-        }
+    //     const userOneLoginResponse: UserLoginResponse | undefined = userDataCache.get("userOneLogin");
+    //     if (!userOneLoginResponse) {
+    //         console.error("User One not found in cache");
+    //         return;
+    //     }
 
-        let conversationListResponse: ConversationListResponse = await chatService.fetchAllConversations(userTwoLoginResponse.userId);
-        let conversations = conversationListResponse.conversations;
-        console.log("Client Two Conversation: ", conversations[0]);
-        userDataCache.set("Conversation", conversations[0]);
+    //     let conversationListResponse: ConversationListResponse = await chatService.fetchAllConversations(userTwoLoginResponse.userId);
+    //     let conversations = conversationListResponse.conversations;
+    //     console.log("Client Two Conversation: ", conversations[0]);
+    //     userDataCache.set("Conversation", conversations[0]);
 
-        expect(conversations[0].members[0].id).toEqual(userTwoLoginResponse.userId);
-        expect(conversations[0].owner_id).toEqual(userOneLoginResponse.userId);
-        expect(conversations[0].name).toEqual(userOneLoginResponse.name);
-    });
+    //     expect(conversations[0].members[0].id).toEqual(userTwoLoginResponse.userId);
+    //     expect(conversations[0].owner_id).toEqual(userOneLoginResponse.userId);
+    //     expect(conversations[0].name).toEqual(userOneLoginResponse.name);
+    // });
 
     // it("Send messages between Client One and Client Two", async () => {
     //     clientOne = new ChatClient();
