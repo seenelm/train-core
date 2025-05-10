@@ -1,6 +1,8 @@
 import { io, Socket } from "socket.io-client";
-import { CreateConversation } from "../model/request/chatClientRequest";
-import { CreateConversationResponse } from "../model/response/chatClientResponse";
+import { CreateConversation } from "../model/request/conversationRequest";
+import { MessageRequest } from "../model/request/messageRequest";
+import { CreateConversationResponse } from "../model/response/conversationResponse";
+import { MessageResponse } from "../model/response/messageResponse";
 import { ObjectId } from "mongodb";
 
 class ChatClient {
@@ -10,14 +12,12 @@ class ChatClient {
         this.socket = io("http://localhost:3001");
     }
 
-    // public createConversation(createConversationRequest: CreateConversation) {
-    //     this.socket.emit("create-chat", createConversationRequest, (response: CreateConversationResponse) => {
-    //         console.log("Received create-conversation-response: ", response);
-    //     });
-    // }
-
     public createSocketConnection(user_id: ObjectId) {
         this.socket.emit("join", user_id);
+    }
+
+    public handleJoinConversation(conversation_id: ObjectId) {
+        this.socket.emit("join-chat", conversation_id);
     }
 
     public waitForConnection(): Promise<void> {
@@ -50,7 +50,18 @@ class ChatClient {
                 reject(error);
             });
         });
-        
+    }
+
+    public sendMessage(message: MessageRequest) {
+        this.socket.emit("new-message", message);
+    }
+
+    public handleMessage(): Promise<MessageResponse> {
+        return new Promise((resolve, reject) => {
+            this.socket.on("chat-message", (response: MessageResponse) => {
+                resolve(response);
+            });
+        });
     }
     
 
