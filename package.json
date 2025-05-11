@@ -1,25 +1,37 @@
 {
-  "name": "train-client-core",
+  "name": "@seenelm/train-core",
   "version": "1.0.0",
-  "main": "index.js",
-  "scripts": {
-    "test": "jest --detectOpenHandles ./test/chat.integration.test.ts"
+  "description": "Shared DTOs and core utilities for frontend and backend applications",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "private": false,
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
   },
-  "keywords": [],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/seenelm/train-core.git"
+  },
+  "scripts": {
+    "build": "tsc",
+    "clean": "rimraf dist",
+    "prebuild": "npm run clean",
+    "prepare": "npm run build",
+    "publish": "npm publish"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "keywords": [
+    "dto",
+    "shared",
+    "typescript"
+  ],
   "author": "",
   "license": "ISC",
-  "description": "",
   "devDependencies": {
-    "@types/jest": "^29.5.12",
-    "@types/node": "^20.14.10",
-    "ts-jest": "^29.2.2",
-    "typescript": "^5.5.3"
-  },
-  "dependencies": {
-    "axios": "^1.7.2",
-    "jest": "^29.7.0",
-    "mongodb": "^6.8.0",
-    "node-cache": "^5.1.2",
-    "socket.io-client": "^4.7.5"
+    "rimraf": "^5.0.1",
+    "typescript": "^5.1.6"
   }
 }
