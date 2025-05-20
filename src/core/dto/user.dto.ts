@@ -55,3 +55,42 @@ export interface GoogleAuthRequest {
   deviceId: string;
 }
 
+/**
+ * Refresh token response DTO
+ */
+export interface RefreshTokenResponse {
+  accessToken: string;
+  refreshToken: string;
+}
+
+/**
+ * Refresh token request DTO
+ */
+export interface RefreshTokenRequest {
+  refreshToken: string;
+  deviceId: string;
+}
+
+/**
+ * Logout request DTO
+ */
+export interface LogoutRequest {
+  refreshToken: string;
+  deviceId: string;
+}
+
+/**
+ * Request password reset request DTO
+ */
+export interface RequestPasswordResetRequest {
+  email: string;
+}
+
+/**
+ * Reset password with code request DTO
+ */
+export interface ResetPasswordWithCodeRequest {
+  email: string;
+  resetCode: string;
+  newPassword: string;
+}
