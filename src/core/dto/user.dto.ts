@@ -40,7 +40,7 @@ export interface UserLoginRequest {
  */
 export interface UserResponse {
   userId: string;
-  token: string;
+  accessToken: string;
   refreshToken: string;
   username: string;
   name: string;

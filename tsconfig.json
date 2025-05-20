@@ -9,7 +9,7 @@
     "outDir": "./dist",
     "baseUrl": ".",
     "paths": {
-      "@shared/*": ["src/shared/*"]
+      "@shared/*": ["src/core/*"]
     }
   },
   "include": ["src/**/*"],

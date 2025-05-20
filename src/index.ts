@@ -4,4 +4,4 @@
  */
 
 // Export all DTOs
-export * from './shared/dto';
+export * from './core/dto';
