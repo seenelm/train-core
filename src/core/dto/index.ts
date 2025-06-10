@@ -3,4 +3,5 @@
  * This allows importing from '@shared/dto' instead of individual files
  */
 
-export * from './user.dto';
+export * from "./user.dto";
+export * from "./user-profile.dto";
