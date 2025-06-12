@@ -14,10 +14,13 @@ export enum ProfileAccess {
   Private = 2,
 }
 
-export enum UserProfileRole {
-  COACH = "coach",
-  TRAINER = "trainer",
-  ATHLETE = "athlete",
-  PRO = "pro",
-  INFLUENCER = "influencer",
+export enum CustomSectionType {
+  CERTIFICATION = "Certifications",
+  IDENTITY = "Fitness Identity",
+  ACHIEVEMENTS = "Achievements",
+  EDUCATION = "Education",
+  SPECIALIZATION = "Specialization",
+  PHILOSOPHY = "Philosophy",
+  GOALS = "Goals",
+  STATS = "Stats",
 }
