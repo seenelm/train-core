@@ -1,15 +1,58 @@
-import { ProfileAccess, CustomSectionType } from "@shared/enums";
+import {
+  ProfileAccess,
+  CustomSectionType,
+  SocialPlatform,
+} from "@shared/enums";
 
-// TODO: Add enums for API error types and CustomSectionTypes
-
-export interface SocialLinkRequest {
-  platform: string;
-  url: string;
+/**
+ * Certification request DTO
+ */
+export interface CertificationRequest {
+  certification: string;
+  specializations: string[];
 }
 
-export interface CustomSectionRequest {
-  title: CustomSectionType;
-  details: Record<string, string>[];
+/**
+ * Education request DTO
+ */
+export interface EducationRequest {
+  institution: string;
+  degree: string;
+  fieldOfStudy?: string;
+  startDate?: string;
+  endDate?: string;
+  description?: string;
+}
+
+// Base interfaces for different types of custom section details
+export interface AchievementItem {
+  title: string;
+  date?: string;
+  description?: string;
+}
+export interface GenericItem {
+  [key: string]: string | number | boolean | null;
+}
+// Type for custom section details based on section type
+export type CustomSectionDetails = {
+  [CustomSectionType.ACHIEVEMENTS]: AchievementItem[];
+  [CustomSectionType.IDENTITY]: GenericItem[];
+  [CustomSectionType.SPECIALIZATION]: GenericItem[];
+  [CustomSectionType.PHILOSOPHY]: GenericItem[];
+  [CustomSectionType.GOALS]: GenericItem[];
+  [CustomSectionType.STATS]: GenericItem[];
+};
+
+export interface CustomSectionRequest<
+  T extends CustomSectionType = CustomSectionType
+> {
+  title: T;
+  details: CustomSectionDetails[T];
+}
+
+export interface SocialLinkRequest {
+  platform: SocialPlatform;
+  url: string;
 }
 
 export interface UserProfileRequest {
@@ -20,6 +63,40 @@ export interface UserProfileRequest {
   accountType: ProfileAccess;
   profilePicture?: string;
   role?: string;
-  socialLinks?: SocialLinkRequest[];
   location?: string;
+  socialLinks?: SocialLinkRequest[];
+  certifications?: CertificationRequest[];
+  customSections?: CustomSectionRequest[];
+  education?: EducationRequest[];
+}
+
+/**
+ * Certification response DTO
+ */
+export interface CertificationResponse {
+  name: string;
+  issuer: string;
+  imageURL: string;
+  certType: string;
+  specializations: string[];
+}
+
+/**
+ * Education response DTO
+ */
+export interface EducationResponse {
+  institution: string;
+  degree: string;
+  fieldOfStudy?: string;
+  startDate?: string;
+  endDate?: string;
+  description?: string;
+}
+
+/**
+ * Social link response DTO
+ */
+export interface SocialLinkResponse {
+  platform: SocialPlatform;
+  url: string;
 }

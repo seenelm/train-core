@@ -15,12 +15,12 @@ export enum ProfileAccess {
 }
 
 export enum CustomSectionType {
-  CERTIFICATION = "Certifications",
   IDENTITY = "Fitness Identity",
   ACHIEVEMENTS = "Achievements",
-  EDUCATION = "Education",
   SPECIALIZATION = "Specialization",
   PHILOSOPHY = "Philosophy",
   GOALS = "Goals",
   STATS = "Stats",
 }
+
+export enum DegreeType {}
