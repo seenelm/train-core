@@ -5,6 +5,19 @@ import {
 } from "@shared/enums";
 
 /**
+ * Basic user profile info request DTO
+ */
+export interface BasicUserProfileInfoRequest {
+  username: string;
+  name: string;
+  bio?: string;
+  accountType: ProfileAccess;
+  profilePicture?: string;
+  role?: string;
+  location?: string;
+}
+
+/**
  * Certification request DTO
  */
 export interface CertificationRequest {
@@ -15,14 +28,14 @@ export interface CertificationRequest {
 /**
  * Education request DTO
  */
-export interface EducationRequest {
-  institution: string;
-  degree: string;
-  fieldOfStudy?: string;
-  startDate?: string;
-  endDate?: string;
-  description?: string;
-}
+// export interface EducationRequest {
+//   institution: string;
+//   degree: string;
+//   fieldOfStudy?: string;
+//   startDate?: string;
+//   endDate?: string;
+//   description?: string;
+// }
 
 // Base interfaces for different types of custom section details
 export interface AchievementItem {
@@ -67,7 +80,27 @@ export interface UserProfileRequest {
   socialLinks?: SocialLinkRequest[];
   certifications?: CertificationRequest[];
   customSections?: CustomSectionRequest[];
-  education?: EducationRequest[];
+}
+
+export interface UserProfileResponse {
+  userId: string;
+  username: string;
+  name: string;
+  bio?: string;
+  accountType: ProfileAccess;
+  profilePicture?: string;
+  role?: string;
+  location?: string;
+  socialLinks?: SocialLinkResponse[];
+  certifications?: CertificationResponse[];
+  customSections?: CustomSectionResponse[];
+}
+
+export interface CustomSectionResponse<
+  T extends CustomSectionType = CustomSectionType
+> {
+  title: T;
+  details: CustomSectionDetails[T];
 }
 
 /**
@@ -79,18 +112,6 @@ export interface CertificationResponse {
   imageURL: string;
   certType: string;
   specializations: string[];
-}
-
-/**
- * Education response DTO
- */
-export interface EducationResponse {
-  institution: string;
-  degree: string;
-  fieldOfStudy?: string;
-  startDate?: string;
-  endDate?: string;
-  description?: string;
 }
 
 /**
