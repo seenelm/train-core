@@ -1,9 +1,4 @@
-import {
-  ProfileAccess,
-  CustomSectionType,
-  SocialPlatform,
-} from "@shared/enums";
-
+import { ProfileAccess, CustomSectionType, SocialPlatform } from "../enums";
 /**
  * Basic user profile info request DTO
  */
