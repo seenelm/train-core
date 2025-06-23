@@ -31,7 +31,7 @@ jobs:
           tag-prefix: "v"
           commit-message: "ci: version bump to {{version}}"
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TOKEN: ${{ secrets.TOKEN }}
 
       - name: Build package
         run: npm run build
@@ -39,4 +39,4 @@ jobs:
       - name: Publish to GitHub Packages
         run: npm publish
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TOKEN: ${{ secrets.TOKEN }}
