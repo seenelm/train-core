@@ -1,6 +1,6 @@
 {
   "name": "@seenelm/train-core",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "description": "Shared DTOs and core utilities for frontend and backend applications",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -16,8 +16,7 @@
     "build": "tsc",
     "clean": "rimraf dist",
     "prebuild": "npm run clean",
-    "prepare": "npm run build",
-    "publish": "npm publish"
+    "prepare": "npm run build"
   },
   "files": [
     "dist",
