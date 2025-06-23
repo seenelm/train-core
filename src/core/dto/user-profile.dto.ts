@@ -20,18 +20,6 @@ export interface CertificationRequest {
   specializations: string[];
 }
 
-/**
- * Education request DTO
- */
-// export interface EducationRequest {
-//   institution: string;
-//   degree: string;
-//   fieldOfStudy?: string;
-//   startDate?: string;
-//   endDate?: string;
-//   description?: string;
-// }
-
 // Base interfaces for different types of custom section details
 export interface AchievementItem {
   title: string;
