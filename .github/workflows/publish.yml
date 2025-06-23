@@ -24,19 +24,13 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Automated Version Bump
-        id: version-bump
-        uses: phips28/gh-action-bump-version@master
-        with:
-          tag-prefix: "v"
-          commit-message: "ci: version bump to {{version}}"
-        env:
-          TOKEN: ${{ secrets.TOKEN }}
-
       - name: Build package
         run: npm run build
+
+      - name: Export Env
+        run: export TOKEN=${{ secrets.TOKEN }}
 
       - name: Publish to GitHub Packages
         run: npm publish
         env:
-          TOKEN: ${{ secrets.TOKEN }}
+          TOKEN: $TOKEN
