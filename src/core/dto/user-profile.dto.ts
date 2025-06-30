@@ -18,6 +18,7 @@ export interface BasicUserProfileInfoRequest {
 export interface CertificationRequest {
   certification: string;
   specializations: string[];
+  receivedDate: string;
 }
 
 // Base interfaces for different types of custom section details
@@ -26,24 +27,18 @@ export interface AchievementItem {
   date?: string;
   description?: string;
 }
-export interface GenericItem {
-  [key: string]: string | number | boolean | null;
-}
-// Type for custom section details based on section type
-export type CustomSectionDetails = {
-  [CustomSectionType.ACHIEVEMENTS]: AchievementItem[];
-  [CustomSectionType.IDENTITY]: GenericItem[];
-  [CustomSectionType.SPECIALIZATION]: GenericItem[];
-  [CustomSectionType.PHILOSOPHY]: GenericItem[];
-  [CustomSectionType.GOALS]: GenericItem[];
-  [CustomSectionType.STATS]: GenericItem[];
-};
 
-export interface CustomSectionRequest<
-  T extends CustomSectionType = CustomSectionType
-> {
-  title: T;
-  details: CustomSectionDetails[T];
+
+export interface StatsItem {
+  category: string;
+  value: string;
+}
+
+
+/* Deprecate this interface */
+export interface CustomSectionRequest {
+  title: CustomSectionType;
+  details: AchievementItem[] | StatsItem[] | string[];
 }
 
 export interface SocialLinkRequest {
@@ -78,23 +73,23 @@ export interface UserProfileResponse {
   certifications?: CertificationResponse[];
   customSections?: CustomSectionResponse[];
 }
-
-export interface CustomSectionResponse<
-  T extends CustomSectionType = CustomSectionType
-> {
-  title: T;
-  details: CustomSectionDetails[T];
+/* Deprecate this interface */
+export interface CustomSectionResponse {
+  title: CustomSectionType;
+  details: AchievementItem[] | StatsItem[] | string[];
 }
 
 /**
  * Certification response DTO
  */
 export interface CertificationResponse {
+  id: string;
   name: string;
   issuer: string;
   imageURL: string;
   certType: string;
   specializations: string[];
+  receivedDate: string;
 }
 
 /**
@@ -103,4 +98,21 @@ export interface CertificationResponse {
 export interface SocialLinkResponse {
   platform: SocialPlatform;
   url: string;
+}
+
+export interface PaginationRequest {
+  page: number;
+  limit: number;
+}
+
+export interface PaginationResponse<T> {
+  data: T[];
+  pagination: {
+    page: number;
+    limit: number;
+    totalItems: number;
+    totalPages: number;
+    hasNextPage: boolean;
+    hasPreviousPage: boolean;
+  };
 }
