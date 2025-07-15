@@ -28,12 +28,10 @@ export interface AchievementItem {
   description?: string;
 }
 
-
 export interface StatsItem {
   category: string;
   value: string;
 }
-
 
 /* Deprecate this interface */
 export interface CustomSectionRequest {
@@ -89,7 +87,6 @@ export interface CertificationResponse {
   imageURL: string;
   certType: string;
   specializations: string[];
-  receivedDate: string;
 }
 
 /**
