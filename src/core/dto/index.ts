@@ -6,3 +6,5 @@
 export * from "./user.dto";
 export * from "./user-profile.dto";
 export * from "./group.dto";
+export * from "./search.dto";
+export * from "./event.dto";

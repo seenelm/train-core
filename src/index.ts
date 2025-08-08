@@ -5,5 +5,4 @@
 
 // Export all DTOs
 export * from "./core/dto";
-
 export * from "./core/enums";

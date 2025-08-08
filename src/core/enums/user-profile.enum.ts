@@ -14,6 +14,12 @@ export enum ProfileAccess {
   Private = 2,
 }
 
+export enum EventStatus {
+  Pending = 1,
+  Accepted = 2,
+  Rejected = 3,
+}
+
 export enum CustomSectionType {
   IDENTITY = "Fitness Identity",
   ACHIEVEMENTS = "Achievements",
