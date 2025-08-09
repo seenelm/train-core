@@ -1,4 +1,4 @@
-import { ProfileAccess } from "@shared/enums";
+import { ProfileAccess } from "../enums";
 
 /**
  * Create Group Request DTO

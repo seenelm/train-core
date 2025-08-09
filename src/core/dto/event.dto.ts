@@ -1,4 +1,4 @@
-import { EventStatus } from "@shared/enums";
+import { EventStatus } from "../enums";
 
 export interface Alert {
   alertTime: Date;
