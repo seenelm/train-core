@@ -1,4 +1,5 @@
 import { ProfileAccess } from "../enums";
+import { ProgramResponse } from "./program.dto";
 
 /**
  * Create Group Request DTO
@@ -37,4 +38,9 @@ export interface GroupResponse {
 export interface UserGroupsResponse {
   userId: string;
   groups: GroupResponse[];
+}
+
+export interface GroupProgramsResponse {
+  groupId: string;
+  programs: ProgramResponse[];
 }
