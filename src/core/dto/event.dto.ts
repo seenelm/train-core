@@ -6,7 +6,7 @@ export interface Alert {
 }
 
 export interface EventRequest {
-  name: string;
+  title: string;
   admin: string[];
   invitees?: string[];
   startTime: Date;
@@ -14,18 +14,20 @@ export interface EventRequest {
   location?: string;
   description?: string;
   alerts?: Alert[];
+  tags?: string[];
 }
 
 export interface EventResponse {
   id: string;
-  name: string;
+  title: string;
   admin: string[];
-  invitees?: string[];
+  invitees: string[];
   startTime: Date;
-  endTime?: Date;
-  location?: string;
-  description?: string;
-  alerts?: Alert[];
+  endTime: Date;
+  location: string;
+  description: string;
+  alerts: Alert[];
+  tags: string[];
 }
 
 export interface UserEventRequest {

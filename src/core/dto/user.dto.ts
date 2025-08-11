@@ -14,6 +14,7 @@ export interface UserRequest {
   email: string;
   authProvider?: string;
   deviceId: string;
+  agreeToTerms: boolean;
 }
 
 /**

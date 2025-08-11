@@ -50,7 +50,6 @@ export interface UserProfileRequest {
   name: string;
   bio?: string;
   accountType: ProfileAccess;
-  profilePicture?: string;
   role?: string;
   location?: string;
   socialLinks?: SocialLinkRequest[];
@@ -64,7 +63,6 @@ export interface UserProfileResponse {
   name: string;
   bio?: string;
   accountType: ProfileAccess;
-  profilePicture?: string;
   role?: string;
   location?: string;
   socialLinks?: SocialLinkResponse[];

@@ -6,9 +6,11 @@ import { ProgramResponse } from "./program.dto";
  * Used for creating new groups
  */
 export interface CreateGroupRequest {
-  groupName: string;
-  bio?: string;
-  accountType?: ProfileAccess;
+  name: string;
+  description?: string;
+  accountType: ProfileAccess;
+  location?: string;
+  tags?: string[];
 }
 
 /**
@@ -16,9 +18,11 @@ export interface CreateGroupRequest {
  * Used for updating existing groups
  */
 export interface UpdateGroupProfileRequest {
-  groupName: string;
-  bio: string;
+  name?: string;
+  description?: string;
   accountType: ProfileAccess;
+  location?: string;
+  tags?: string[];
 }
 
 /**
@@ -27,8 +31,10 @@ export interface UpdateGroupProfileRequest {
  */
 export interface GroupResponse {
   id: string;
-  groupName: string;
-  bio?: string;
+  name: string;
+  description: string;
+  location: string;
+  tags: string[];
   owners: string[];
   members: string[];
   requests: string[];
