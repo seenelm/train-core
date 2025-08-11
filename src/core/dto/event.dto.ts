@@ -39,3 +39,8 @@ export interface UserEventResponse {
   event: EventResponse;
   status: EventStatus;
 }
+
+export interface GroupEventResponse {
+  event: EventResponse;
+  status: EventStatus;
+}
