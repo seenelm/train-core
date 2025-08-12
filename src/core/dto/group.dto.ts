@@ -1,6 +1,14 @@
 import { ProfileAccess } from "../enums";
 import { ProgramResponse } from "./program.dto";
 
+export interface GroupRequest {
+  name: string;
+  description?: string;
+  accountType: ProfileAccess;
+  location?: string;
+  tags?: string[];
+}
+
 /**
  * Create Group Request DTO
  * Used for creating new groups
