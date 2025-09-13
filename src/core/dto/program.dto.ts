@@ -1,24 +1,30 @@
+import { ProfileAccess } from "../enums";
+
+export interface Phase {
+  name: string;
+  startWeek: number;
+  endWeek: number;
+}
+
 export interface ProgramRequest {
   name: string;
-  description?: string;
-  category?: string;
-  imagePath?: string;
+  types?: string[];
+  numWeeks: number;
+  hasNutritionProgram?: boolean;
+  phases?: Phase[];
+  accessType: ProfileAccess;
   createdBy: string;
-  numWeeks?: number;
-  weeks: string[];
-  difficulty?: string;
 }
 
 export interface ProgramResponse {
   id: string;
   name: string;
-  description?: string;
-  category?: string;
-  imagePath?: string;
+  types?: string[];
+  numWeeks: number;
+  hasNutritionProgram?: boolean;
+  phases?: Phase[];
+  accessType: ProfileAccess;
   createdBy: string;
-  numWeeks?: number;
-  weeks: string[];
-  difficulty?: string;
 }
 
 export interface ExerciseRequest {
