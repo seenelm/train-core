@@ -13,7 +13,9 @@ export interface ProgramRequest {
   hasNutritionProgram?: boolean;
   phases?: Phase[];
   accessType: ProfileAccess;
+  admins: string[];
   createdBy: string;
+  members?: string[];
 }
 
 export interface ProgramResponse {
@@ -24,89 +26,192 @@ export interface ProgramResponse {
   hasNutritionProgram?: boolean;
   phases?: Phase[];
   accessType: ProfileAccess;
+  admins: string[];
   createdBy: string;
-}
-
-export interface ExerciseRequest {
-  name?: string;
-  group?: string;
-  imagePath?: string;
-  weight?: string;
-  targetSets?: number;
-  targetReps?: number;
-  notes?: string;
-  completed?: boolean;
-  createdBy: string;
-  sets: string[];
-}
-
-export interface ExerciseResponse {
-  id: string;
-  name?: string;
-  group?: string;
-  imagePath?: string;
-  weight?: string;
-  targetSets?: number;
-  targetReps?: number;
-  notes?: string;
-  completed?: boolean;
-  createdBy: string;
-  sets: string[];
-}
-
-export interface SetRequest {
-  weight?: number;
-  reps?: number;
-  completed?: boolean;
-  imagePath?: string;
-  link?: string;
-  createdBy: string;
-}
-
-export interface SetResponse {
-  id: string;
-  weight?: number;
-  reps?: number;
-  completed?: boolean;
-  imagePath?: string;
-  link?: string;
-  createdBy: string;
-}
-
-export interface WeekRequest {
-  programId: string;
-  name: string;
-  description?: string;
-  imagePath?: string;
-  weekNumber: number;
-  workouts: string[];
-}
-
-export interface WeekResponse {
-  id: string;
-  programId: string;
-  name: string;
-  description?: string;
-  imagePath?: string;
-  weekNumber: number;
-  workouts: string[];
+  members?: string[];
+  weeks?: string[];
 }
 
 export interface WorkoutRequest {
-  title?: string;
+  name: string;
   description?: string;
-  imagePath?: string;
-  completed?: boolean;
+  category?: string[];
+  difficulty?: "beginner" | "intermediate" | "advanced";
+  duration?: number;
+  blocks: Block[];
+  accessType: ProfileAccess;
   createdBy: string;
-  exercises: string[];
+  startDate: Date;
+  endDate: Date;
+}
+
+export interface Block {
+  type: "single" | "superset" | "cluster" | "circuit";
+  name?: string;
+  description?: string;
+  restBetweenExercisesSec?: number;
+  restAfterBlockSec?: number;
+  exercises: Exercise[];
+  order: number;
+}
+
+export interface Exercise {
+  exerciseId: string;
+  targetSets?: number;
+  targetReps?: number;
+  targetDurationSec?: number;
+  targetWeight?: number;
+  notes?: string;
+  order: number;
 }
 
 export interface WorkoutResponse {
   id: string;
-  title?: string;
+  name: string;
   description?: string;
-  imagePath?: string;
-  completed?: boolean;
+  category?: string[];
+  difficulty?: "beginner" | "intermediate" | "advanced";
+  duration?: number;
+  blocks: Block[];
+  accessType: ProfileAccess;
   createdBy: string;
-  exercises: string[];
+  startDate: Date;
+  endDate: Date;
+}
+
+export interface WorkoutLogRequest {
+  userId: string;
+  workoutId: string;
+  blockLogs: BlockLog[];
+  actualDuration: number;
+  actualStartDate: Date;
+  actualEndDate: Date;
+  isCompleted: boolean;
+}
+
+export interface BlockLog {
+  actualRestBetweenExercisesSec?: number;
+  actualRestAfterBlockSec?: number;
+  exerciseLogs: ExerciseLog[];
+  order: number;
+  isCompleted: boolean;
+}
+
+export interface ExerciseLog {
+  exerciseId: string;
+  actualSets?: number;
+  actualReps?: number;
+  actualDurationSec?: number;
+  actualWeight?: number;
+  isCompleted: boolean;
+  order: number;
+}
+
+export interface WorkoutLogResponse {
+  id: string;
+  userId: string;
+  workoutId: string;
+  blockLogs: BlockLog[];
+  actualDuration: number;
+  actualStartDate: Date;
+  actualEndDate: Date;
+  isCompleted: boolean;
+}
+
+export interface MealRequest {
+  createdBy: string;
+  mealName: string;
+  macros?: Macros;
+  ingredients?: Ingredient[];
+  instructions?: string;
+  startDate: Date;
+  endDate: Date;
+}
+
+export interface MealResponse {
+  id: string;
+  createdBy: string;
+  mealName: string;
+  macros?: Macros;
+  ingredients?: Ingredient[];
+  instructions?: string;
+  startDate: Date;
+  endDate: Date;
+}
+
+export interface Macros {
+  protein: number;
+  carbs: number;
+  fats: number;
+}
+
+export interface Portion {
+  amount: number;
+  unit: Unit;
+}
+
+export interface Ingredient {
+  name: string;
+  portion: Portion;
+}
+
+export enum Unit {
+  Gram = "g",
+  Kilogram = "kg",
+  Ounce = "oz",
+  Pound = "lb",
+  Milliliter = "ml",
+  Liter = "l",
+  Cup = "cup",
+  Tablespoon = "tbsp",
+  Teaspoon = "tsp",
+  Piece = "piece",
+}
+
+export interface MealLogRequest {
+  userId: string;
+  mealId: string;
+  actualMacros?: Macros;
+  actualIngredients?: Ingredient[];
+  notes?: string;
+  isCompleted: boolean;
+  actualStartDate: Date;
+  actualEndDate: Date;
+}
+
+export interface MealLogResponse {
+  id: string;
+  userId: string;
+  mealId: string;
+  actualMacros?: Macros;
+  actualIngredients?: Ingredient[];
+  notes?: string;
+  isCompleted: boolean;
+  actualStartDate: Date;
+  actualEndDate: Date;
+}
+
+export interface NotesRequest {
+  title: string;
+  content: string;
+  startDate: Date;
+  endDate: Date;
+}
+
+export interface NotesResponse {
+  id: string;
+  title: string;
+  content: string;
+  startDate: Date;
+  endDate: Date;
+}
+
+export interface WeekResponse {
+  id: string;
+  weekNumber: number;
+  workouts?: WorkoutResponse[];
+  meals?: MealResponse[];
+  notes?: NotesResponse[];
+  startDate: Date;
+  endDate: Date;
 }
