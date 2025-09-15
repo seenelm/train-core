@@ -1,4 +1,4 @@
-import { ProfileAccess } from "../enums";
+import { ProfileAccess, WorkoutDifficulty, Unit, BlockType } from "../enums";
 
 export interface Phase {
   name: string;
@@ -36,7 +36,7 @@ export interface WorkoutRequest {
   name: string;
   description?: string;
   category?: string[];
-  difficulty?: "beginner" | "intermediate" | "advanced";
+  difficulty?: WorkoutDifficulty;
   duration?: number;
   blocks: Block[];
   accessType: ProfileAccess;
@@ -46,7 +46,7 @@ export interface WorkoutRequest {
 }
 
 export interface Block {
-  type: "single" | "superset" | "cluster" | "circuit";
+  type: BlockType;
   name?: string;
   description?: string;
   restBetweenExercisesSec?: number;
@@ -70,7 +70,7 @@ export interface WorkoutResponse {
   name: string;
   description?: string;
   category?: string[];
-  difficulty?: "beginner" | "intermediate" | "advanced";
+  difficulty?: WorkoutDifficulty;
   duration?: number;
   blocks: Block[];
   accessType: ProfileAccess;
@@ -153,19 +153,6 @@ export interface Portion {
 export interface Ingredient {
   name: string;
   portion: Portion;
-}
-
-export enum Unit {
-  Gram = "g",
-  Kilogram = "kg",
-  Ounce = "oz",
-  Pound = "lb",
-  Milliliter = "ml",
-  Liter = "l",
-  Cup = "cup",
-  Tablespoon = "tbsp",
-  Teaspoon = "tsp",
-  Piece = "piece",
 }
 
 export interface MealLogRequest {
