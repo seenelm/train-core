@@ -67,6 +67,7 @@ export interface Exercise {
 
 export interface WorkoutResponse {
   id: string;
+  versionId: number;
   name: string;
   description?: string;
   category?: string[];
@@ -130,6 +131,7 @@ export interface MealRequest {
 
 export interface MealResponse {
   id: string;
+  versionId: number;
   createdBy: string;
   mealName: string;
   macros?: Macros;
