@@ -18,6 +18,13 @@ export interface ProgramRequest {
   members?: string[];
 }
 
+export interface WeekDetail {
+  id: string;
+  name?: string;
+  description?: string;
+  weekNumber: number;
+}
+
 export interface ProgramResponse {
   id: string;
   name: string;
@@ -29,7 +36,7 @@ export interface ProgramResponse {
   admins: string[];
   createdBy: string;
   members?: string[];
-  weeks?: string[];
+  weeks?: WeekDetail[];
 }
 
 export interface WorkoutRequest {
