@@ -83,6 +83,8 @@ export interface WorkoutResponse {
 export interface WorkoutLogRequest {
   userId: string;
   workoutId: string;
+  versionId: number;
+  workoutSnapshot: WorkoutSnapshot;
   blockLogs: BlockLog[];
   actualDuration: number;
   actualStartDate: Date;
@@ -108,10 +110,45 @@ export interface ExerciseLog {
   order: number;
 }
 
+export interface WorkoutSnapshot {
+  name: string;
+  description?: string;
+  category?: string[];
+  difficulty?: WorkoutDifficulty;
+  duration?: number;
+  blockSnapshot: BlockSnapshot[];
+  accessType: ProfileAccess;
+  createdBy: string;
+  startDate: Date;
+  endDate: Date;
+}
+
+export interface BlockSnapshot {
+  type: BlockType;
+  name?: string;
+  description?: string;
+  restBetweenExercisesSec?: number;
+  restAfterBlockSec?: number;
+  exerciseSnapshot: ExerciseSnapshot[];
+  order: number;
+}
+
+export interface ExerciseSnapshot {
+  exerciseId: string;
+  targetSets?: number;
+  targetReps?: number;
+  targetDurationSec?: number;
+  targetWeight?: number;
+  notes?: string;
+  order: number;
+}
+
 export interface WorkoutLogResponse {
   id: string;
   userId: string;
   workoutId: string;
+  versionId: number;
+  workoutSnapshot: WorkoutSnapshot;
   blockLogs: BlockLog[];
   actualDuration: number;
   actualStartDate: Date;
@@ -158,8 +195,10 @@ export interface Ingredient {
 }
 
 export interface MealLogRequest {
+  versionId: number;
   userId: string;
   mealId: string;
+  mealSnapshot: MealSnapshot;
   actualMacros?: Macros;
   actualIngredients?: Ingredient[];
   notes?: string;
@@ -168,10 +207,38 @@ export interface MealLogRequest {
   actualEndDate: Date;
 }
 
+export interface MealSnapshot {
+  createdBy: string;
+  mealName: string;
+  macrosSnapshot: MacrosSnapshot;
+  ingredientSnapshot: IngredientSnapshot[];
+  instructions?: string;
+  startDate: Date;
+  endDate: Date;
+}
+
+export interface MacrosSnapshot {
+  protein: number;
+  carbs: number;
+  fats: number;
+}
+
+export interface PortionSnapshot {
+  amount: number;
+  unit: Unit;
+}
+
+export interface IngredientSnapshot {
+  name: string;
+  portionSnapshot: PortionSnapshot;
+}
+
 export interface MealLogResponse {
   id: string;
+  versionId: number;
   userId: string;
   mealId: string;
+  mealSnapshot: MealSnapshot;
   actualMacros?: Macros;
   actualIngredients?: Ingredient[];
   notes?: string;
@@ -195,8 +262,15 @@ export interface NotesResponse {
   endDate: Date;
 }
 
+export interface WeekRequest {
+  name?: string;
+  description?: string;
+}
+
 export interface WeekResponse {
   id: string;
+  name?: string;
+  description?: string;
   weekNumber: number;
   workouts?: WorkoutResponse[];
   meals?: MealResponse[];
