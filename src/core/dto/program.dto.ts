@@ -92,7 +92,7 @@ export interface WorkoutLogRequest {
   workoutId: string;
   versionId: number;
   workoutSnapshot: WorkoutSnapshot;
-  blockLogs: BlockLog[];
+  blockLogs?: BlockLog[];
   actualDuration: number;
   actualStartDate: Date;
   actualEndDate: Date;
