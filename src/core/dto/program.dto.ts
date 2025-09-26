@@ -45,7 +45,7 @@ export interface WorkoutRequest {
   category?: string[];
   difficulty?: WorkoutDifficulty;
   duration?: number;
-  blocks: Block[];
+  blocks?: Block[];
   accessType: ProfileAccess;
   createdBy: string;
   startDate: Date;
@@ -80,7 +80,7 @@ export interface WorkoutResponse {
   category?: string[];
   difficulty?: WorkoutDifficulty;
   duration?: number;
-  blocks: Block[];
+  blocks?: Block[];
   accessType: ProfileAccess;
   createdBy: string;
   startDate: Date;
