@@ -63,7 +63,7 @@ export interface Block {
 }
 
 export interface Exercise {
-  exerciseId: string;
+  name: string;
   targetSets?: number;
   targetReps?: number;
   targetDurationSec?: number;
@@ -108,7 +108,7 @@ export interface BlockLog {
 }
 
 export interface ExerciseLog {
-  exerciseId: string;
+  name: string;
   actualSets?: number;
   actualReps?: number;
   actualDurationSec?: number;
@@ -141,7 +141,7 @@ export interface BlockSnapshot {
 }
 
 export interface ExerciseSnapshot {
-  exerciseId: string;
+  name: string;
   targetSets?: number;
   targetReps?: number;
   targetDurationSec?: number;
