@@ -272,6 +272,9 @@ export interface NotesResponse {
 export interface WeekRequest {
   name?: string;
   description?: string;
+  weekNumber: number;
+  startDate: Date;
+  endDate: Date;
 }
 
 export interface WeekResponse {
