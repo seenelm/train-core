@@ -255,6 +255,7 @@ export interface MealLogResponse {
 }
 
 export interface NotesRequest {
+  createdBy: string;
   title: string;
   content: string;
   startDate: Date;
@@ -263,6 +264,7 @@ export interface NotesRequest {
 
 export interface NotesResponse {
   id: string;
+  createdBy: string;
   title: string;
   content: string;
   startDate: Date;
