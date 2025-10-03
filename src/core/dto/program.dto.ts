@@ -217,8 +217,8 @@ export interface MealLogRequest {
 export interface MealSnapshot {
   createdBy: string;
   mealName: string;
-  macrosSnapshot: MacrosSnapshot;
-  ingredientSnapshot: IngredientSnapshot[];
+  macrosSnapshot?: MacrosSnapshot;
+  ingredientSnapshot?: IngredientSnapshot[];
   instructions?: string;
   startDate: Date;
   endDate: Date;
