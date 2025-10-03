@@ -54,6 +54,7 @@ export interface GoogleAuthRequest {
   idToken: string;
   name?: string;
   deviceId: string;
+  agreeToTerms: boolean;
 }
 
 /**
