@@ -284,9 +284,9 @@ export interface WeekResponse {
   name?: string;
   description?: string;
   weekNumber: number;
-  workouts?: WorkoutResponse[];
-  meals?: MealResponse[];
-  notes?: NotesResponse[];
+  workouts?: string[];
+  meals?: string[];
+  notes?: string[];
   startDate: Date;
   endDate: Date;
 }
