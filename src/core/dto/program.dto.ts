@@ -22,6 +22,7 @@ export interface ProgramRequest {
   admins: string[];
   createdBy: string;
   members?: string[];
+  image?: string;
 }
 
 export interface WeekDetail {
@@ -29,6 +30,7 @@ export interface WeekDetail {
   name?: string;
   description?: string;
   weekNumber: number;
+  imageUrl?: string;
 }
 
 export interface ProgramResponse {
@@ -43,6 +45,7 @@ export interface ProgramResponse {
   createdBy: string;
   members?: string[];
   weeks?: WeekDetail[];
+  imageUrl?: string;
 }
 
 export interface WorkoutRequest {
@@ -56,6 +59,7 @@ export interface WorkoutRequest {
   createdBy: string;
   startDate: Date;
   endDate: Date;
+  imageUrl?: string;
 }
 
 export interface Block {
@@ -93,6 +97,7 @@ export interface WorkoutResponse {
   createdBy: string;
   startDate: Date;
   endDate: Date;
+  imageUrl?: string;
 }
 
 export interface WorkoutLogRequest {
@@ -288,6 +293,7 @@ export interface WeekRequest {
   weekNumber: number;
   startDate: Date;
   endDate: Date;
+  image?: string;
 }
 
 export interface WeekResponse {
@@ -300,4 +306,5 @@ export interface WeekResponse {
   notes?: string[];
   startDate: Date;
   endDate: Date;
+  imageUrl?: string;
 }
