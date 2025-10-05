@@ -26,3 +26,10 @@ export enum BlockType {
   EMOM = "every minute on the minute",
   AMRAP = "as many reps/rounds as possible",
 }
+
+export enum MeasurementType {
+  REPS = "reps",
+  TIME = "time",
+  DISTANCE = "distance",
+  BODYWEIGHT = "bodyweight",
+}

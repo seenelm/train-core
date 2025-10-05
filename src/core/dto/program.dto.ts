@@ -1,4 +1,10 @@
-import { ProfileAccess, WorkoutDifficulty, Unit, BlockType } from "../enums";
+import {
+  ProfileAccess,
+  WorkoutDifficulty,
+  Unit,
+  BlockType,
+  MeasurementType,
+} from "../enums";
 
 export interface Phase {
   name: string;
@@ -55,21 +61,23 @@ export interface WorkoutRequest {
 export interface Block {
   type: BlockType;
   name?: string;
+  targetSets?: number;
   description?: string;
-  restBetweenExercisesSec?: number;
-  restAfterBlockSec?: number;
+  rest?: number;
   exercises: Exercise[];
   order: number;
 }
 
 export interface Exercise {
   name: string;
-  targetSets?: number;
+  rest?: number;
   targetReps?: number;
   targetDurationSec?: number;
   targetWeight?: number;
+  targetDistance?: number;
   notes?: string;
   order: number;
+  measurementType: MeasurementType;
 }
 
 export interface WorkoutResponse {
@@ -100,8 +108,8 @@ export interface WorkoutLogRequest {
 }
 
 export interface BlockLog {
-  actualRestBetweenExercisesSec?: number;
-  actualRestAfterBlockSec?: number;
+  actualRest?: number;
+  actualSets?: number;
   exerciseLogs: ExerciseLog[];
   order: number;
   isCompleted: boolean;
@@ -109,10 +117,11 @@ export interface BlockLog {
 
 export interface ExerciseLog {
   name: string;
-  actualSets?: number;
+  actualRest?: number;
   actualReps?: number;
   actualDurationSec?: number;
   actualWeight?: number;
+  actualDistance?: number;
   isCompleted: boolean;
   order: number;
 }
@@ -133,21 +142,23 @@ export interface WorkoutSnapshot {
 export interface BlockSnapshot {
   type: BlockType;
   name?: string;
+  targetSets?: number;
   description?: string;
-  restBetweenExercisesSec?: number;
-  restAfterBlockSec?: number;
+  rest?: number;
   exerciseSnapshot: ExerciseSnapshot[];
   order: number;
 }
 
 export interface ExerciseSnapshot {
   name: string;
-  targetSets?: number;
+  rest?: number;
   targetReps?: number;
   targetDurationSec?: number;
   targetWeight?: number;
+  targetDistance?: number;
   notes?: string;
   order: number;
+  measurementType: MeasurementType;
 }
 
 export interface WorkoutLogResponse {
