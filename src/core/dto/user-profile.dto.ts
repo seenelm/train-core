@@ -48,6 +48,8 @@ export interface UserProfileRequest {
   userId: string;
   username: string;
   name: string;
+  phoneNumber?: string;
+  birthday?: Date;
   bio?: string;
   accountType: ProfileAccess;
   role?: string;
@@ -61,6 +63,8 @@ export interface UserProfileResponse {
   userId: string;
   username: string;
   name: string;
+  phoneNumber?: string;
+  birthday?: Date;
   bio?: string;
   accountType: ProfileAccess;
   role?: string;
