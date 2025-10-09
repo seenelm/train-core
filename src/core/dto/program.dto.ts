@@ -14,6 +14,7 @@ export interface Phase {
 
 export interface ProgramRequest {
   name: string;
+  description?: string;
   types?: string[];
   numWeeks: number;
   hasNutritionProgram?: boolean;
@@ -36,6 +37,7 @@ export interface WeekDetail {
 export interface ProgramResponse {
   id: string;
   name: string;
+  description?: string;
   types?: string[];
   numWeeks: number;
   hasNutritionProgram?: boolean;
