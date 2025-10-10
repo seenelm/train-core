@@ -62,7 +62,7 @@ export interface UserProfileRequest {
 export interface UserProfileResponse {
   id: string;
   userId: string;
-  email: string;
+  email?: string;
   username: string;
   name: string;
   phoneNumber?: string;
