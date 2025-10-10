@@ -52,7 +52,7 @@ export interface UserProfileRequest {
   birthday?: Date;
   bio?: string;
   accountType: ProfileAccess;
-  role?: string;
+  role?: string[];
   location?: string;
   socialLinks?: SocialLinkRequest[];
   certifications?: CertificationRequest[];
@@ -60,14 +60,16 @@ export interface UserProfileRequest {
 }
 
 export interface UserProfileResponse {
+  id: string;
   userId: string;
+  email: string;
   username: string;
   name: string;
   phoneNumber?: string;
   birthday?: Date;
   bio?: string;
   accountType: ProfileAccess;
-  role?: string;
+  role?: string[];
   location?: string;
   socialLinks?: SocialLinkResponse[];
   certifications?: CertificationResponse[];
