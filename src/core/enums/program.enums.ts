@@ -33,3 +33,16 @@ export enum MeasurementType {
   DISTANCE = "distance",
   BODYWEIGHT = "bodyweight",
 }
+
+export enum MeasurementUnit {
+  POUND = "lb",
+  KILOGRAM = "kg",
+  METER = "m",
+  KILOMETER = "km",
+  MILE = "mi",
+  YARD = "yd",
+  FOOT = "ft",
+  HOUR = "hr",
+  MINUTE = "min",
+  SECOND = "sec",
+}

@@ -4,6 +4,7 @@ import {
   Unit,
   BlockType,
   MeasurementType,
+  MeasurementUnit,
 } from "../enums";
 
 export interface Phase {
@@ -57,6 +58,7 @@ export interface WorkoutRequest {
   difficulty?: WorkoutDifficulty;
   duration?: number;
   blocks?: Block[];
+  exercises?: Exercise[];
   accessType: ProfileAccess;
   createdBy: string;
   startDate: Date;
@@ -74,6 +76,11 @@ export interface Block {
   order: number;
 }
 
+export interface Measurement {
+  measurementType: MeasurementType;
+  measurementUnit: MeasurementUnit;
+}
+
 export interface Exercise {
   name: string;
   rest?: number;
@@ -83,7 +90,9 @@ export interface Exercise {
   targetDistance?: number;
   notes?: string;
   order: number;
-  measurementType: MeasurementType;
+  sets?: number;
+  hasSuperset?: boolean;
+  measurement: Measurement;
 }
 
 export interface WorkoutResponse {
@@ -95,6 +104,7 @@ export interface WorkoutResponse {
   difficulty?: WorkoutDifficulty;
   duration?: number;
   blocks?: Block[];
+  exercises?: Exercise[];
   accessType: ProfileAccess;
   createdBy: string;
   startDate: Date;
@@ -139,7 +149,8 @@ export interface WorkoutSnapshot {
   category?: string[];
   difficulty?: WorkoutDifficulty;
   duration?: number;
-  blockSnapshot: BlockSnapshot[];
+  blockSnapshot?: BlockSnapshot[];
+  exerciseSnapshot?: ExerciseSnapshot[];
   accessType: ProfileAccess;
   createdBy: string;
   startDate: Date;
@@ -165,7 +176,9 @@ export interface ExerciseSnapshot {
   targetDistance?: number;
   notes?: string;
   order: number;
-  measurementType: MeasurementType;
+  sets?: number;
+  hasSuperset?: boolean;
+  measurement: Measurement;
 }
 
 export interface WorkoutLogResponse {
