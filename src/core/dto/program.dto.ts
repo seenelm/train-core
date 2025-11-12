@@ -118,6 +118,7 @@ export interface WorkoutLogRequest {
   versionId: number;
   workoutSnapshot: WorkoutSnapshot;
   blockLogs?: BlockLog[];
+  exerciseLogs?: ExerciseLog[];
   actualDuration: number;
   actualStartDate: Date;
   actualEndDate: Date;
@@ -125,6 +126,7 @@ export interface WorkoutLogRequest {
 }
 
 export interface BlockLog {
+  name?: string;
   actualRest?: number;
   actualSets?: number;
   exerciseLogs: ExerciseLog[];
@@ -141,6 +143,9 @@ export interface ExerciseLog {
   actualDistance?: number;
   isCompleted: boolean;
   order: number;
+  actualSets?: number;
+  actualMeasurement?: Measurement;
+  hasSuperset?: boolean;
 }
 
 export interface WorkoutSnapshot {
@@ -187,7 +192,8 @@ export interface WorkoutLogResponse {
   workoutId: string;
   versionId: number;
   workoutSnapshot: WorkoutSnapshot;
-  blockLogs: BlockLog[];
+  blockLogs?: BlockLog[];
+  exerciseLogs?: ExerciseLog[];
   actualDuration: number;
   actualStartDate: Date;
   actualEndDate: Date;
